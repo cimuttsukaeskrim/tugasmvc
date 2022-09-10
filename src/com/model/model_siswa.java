@@ -44,7 +44,6 @@ String Jk;
 
     @Override
     public void Ubah(table tb) {
-        
     }
 
     @Override
@@ -57,6 +56,10 @@ String Jk;
 
     @Override
     public void Baru(table tb) throws SQLException {
+        tb.txtNIS.setText("");
+        tb.txtNama.setText("");
+        tb.rbLaki.setSelected(true);
+        tb.cbJurusan.setSelectedIndex(0);//
     }
 
     @Override
