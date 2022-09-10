@@ -59,7 +59,7 @@ String Jk;
         tb.txtNIS.setText("");
         tb.txtNama.setText("");
         tb.rbLaki.setSelected(true);
-        tb.cbJurusan.setSelectedIndex(0);
+        tb.cbJurusan.setSelectedIndex(0);//
     }
 
     @Override
