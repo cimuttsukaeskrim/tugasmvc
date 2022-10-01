@@ -4,18 +4,29 @@
  * and open the template in the editor.
  */
 package com.view;
-
-/**
- *
- * @author LAB 2 PC 6
- */
+import com.model.model_siswa;
+import com.view.table.tblmodel;
+import java.awt.Component;
+import java.sql.SQLException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 public class table extends javax.swing.JFrame {
-
-    /**
-     * Creates new form table
-     */
-    public table() {
+    public DefaultTableModel tblmodel;
+    String header[] = {"NIS", "Nama", "Jenis Kelamin", "Jurusan"};
+    
+    public table() throws SQLException{
         initComponents();
+        tblmodel = new DefaultTableModel(null, header);
+        table.setModel((TableModel) tblmodel);
+        table.setAutoResizeMode(table.AUTO_RESIZE_OFF);
+        model.Tampil(this);
+        setLebarKolom();
     }
 
     /**
@@ -58,6 +69,11 @@ public class table extends javax.swing.JFrame {
 
         btnBaru.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnBaru.setText("Baru");
+        btnBaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBaruActionPerformed(evt);
+            }
+        });
 
         btnSimpan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSimpan.setText("Simpan");
@@ -182,46 +198,58 @@ public class table extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    model_siswa model = new model_siswa();
+    public void setColumnWidth(int kolom){
+        DefaultTableColumnModel dtcm = (DefaultTableColumnModel) table.getColumnModel();
+        TableColumn kolomtabel = dtcm.getColumn(kolom);
+        int lebar = 0;
+        int margin = 10;
+        int a;
+        TableCellRenderer renderer = kolomtabel.getHeaderRenderer();
+        if (renderer == null){
+            renderer = table.getTableHeader().getDefaultRenderer();
+            
+        }
+        Component komponen = renderer.getTableCellRendererComponent(table, kolomtabel.getHeaderValue(), false, false, 0, 0);
+        lebar = komponen.getPreferredSize().width;
+        for (a = 0; a < table.getRowCount(); a++){
+            renderer = table.getCellRenderer(a, kolom);
+            komponen = renderer.getTableCellRendererComponent(table, table.getValueAt(a, kolom), false, false, a, kolom);
+            int lebarkolom = komponen.getPreferredSize().width;
+            lebar = Math.max(lebar, lebarkolom);
+        }
+        lebar = lebar + margin;
+        kolomtabel.setPreferredWidth(lebar);
+    }
+    public void setLebarKolom(){
+        int a;
+        for (a = 0; a < table.getColumnCount(); a++){
+            setColumnWidth(a);
+        }
+    }
     private void cbJurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJurusanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbJurusanActionPerformed
+
+    private void btnBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaruActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBaruActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(table.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new table().setVisible(true);
+                try{
+                    new table().setVisible(true); 
+                } catch (SQLException ex){
+                Logger.getLogger(table.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
         });
     }
-
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBaru;
     public javax.swing.JButton btnHapus;
@@ -242,4 +270,10 @@ public class table extends javax.swing.JFrame {
     public javax.swing.JTextField txtNIS;
     public javax.swing.JTextField txtNama;
     // End of variables declaration//GEN-END:variables
+
+    public class tblmodel {
+
+        public tblmodel() {
+        }
+    }
 }

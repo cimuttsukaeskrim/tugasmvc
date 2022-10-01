@@ -11,9 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 public interface controller_siswa {
     public void Simpan(table tb)throws SQLException;
-    public void Ubah(table tb) throws SQLException;
-    public void Hapus(table tb) throws SQLException;
-    public void Tampil(table tb) throws SQLException;
-    public void Baru(table tb) throws SQLException;
-    public void KlikTabel(table tb) throws SQLException;
+    public void Ubah(table tb)throws SQLException;
+//    public void Hapus(table tb)throws SQLException;
+//    public void Tampil(table tb)throws SQLException;
+//    public void KlikTabel(table tb)throws SQLException;
+//    public void Baru(table tb)throws SQLException;
 }
