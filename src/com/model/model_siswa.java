@@ -19,7 +19,7 @@ String Jk;
     @Override
     public void Simpan(table tb) throws SQLException {
         if(tb.rbLaki.isSelected()){
-            Jk= "Laki-laki";
+            Jk = "Laki-laki";
         } else{
             Jk = "Perempuan";
         }
@@ -34,9 +34,11 @@ String Jk;
             prepare.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Berhasil diSimpan");
             prepare.close();
-            Baru(tb);
         } catch(Exception e){
             System.out.println(e);
+
+        } 
+
         } finally {
         Tampil(tb);
     }
@@ -54,16 +56,40 @@ String Jk;
     public void Tampil(table tb) throws SQLException {
     }
 
+ 
+   
+   
     @Override
+
+    public void Ubah(table tb) throws SQLException {
+        if (tb.rbLaki.isSelected()){
+            Jk = "Laki-laki";
+        } else {
+            Jk = "Perempuan";
+        } try {
+            Connection con = koneksi.getcon();
+           String sql = "UPDATE tb. SET nama=?, jenis_kelamin=?," + "jurusan=? WHERE NIS=?";
+           PreparedStatement prepare = con.prepareStatement(sql);
+           prepare.setString(4, tb.txtNIS.getText());
+           prepare.setString(1, tb.txtNama.getText());
+           prepare.setString(2, Jk);
+           prepare.setString(3, (String)tb.cbJurusan.getSelectedItem());
+           prepare.executeUpdate();
+           JOptionPane.showMessageDialog(null, "Data Berhasil diubah");
+           prepare.close();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        }
+
     public void Baru(table tb) throws SQLException {
         tb.txtNIS.setText("");
         tb.txtNama.setText("");
         tb.rbLaki.setSelected(true);
         tb.cbJurusan.setSelectedIndex(0);//
+
     }
 
-    @Override
-    public void KlikTabel(table tb) throws SQLException {
-    }
+     
     
-}
+
